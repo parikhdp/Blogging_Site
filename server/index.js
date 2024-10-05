@@ -20,10 +20,12 @@ async function connectDB() {
 }
 
 connectDB();
-app.use(cors({
+const corsOptions = {
     credentials: true,
     origin: ['http://localhost:3000', 'https://main.d19m4qsq21lz5t.amplifyapp.com'],
-}));
+};
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));  // Handles preflight requests for all routes
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
