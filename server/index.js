@@ -1,4 +1,6 @@
 const express = require('express');
+const https = require('https');
+const fs = require('fs');
 const app = express();
 const cors = require('cors');
 const { default: mongoose } = require('mongoose');
@@ -18,6 +20,10 @@ async function connectDB() {
     await mongoose.connect(process.env.DB_URL);
     console.log('Connected to MongoDB');
 }
+const sslOptions = {
+    key: fs.readFileSync('/home/ubuntu/ssl/mykey.key'), // Update the path if necessary
+    cert: fs.readFileSync('/home/ubuntu/ssl/mycert.crt'), // Update the path if necessary
+};
 
 connectDB();
 const corsOptions = {
@@ -165,6 +171,8 @@ app.get("/post/:id", async (req, res) => {
 });
 
 
-app.listen(4000, () => {
-    console.log('Server is running on port 4000');
+const port = 4000; // You can keep this port or change it as needed
+https.createServer(sslOptions, app).listen(port, () => {
+    console.log(`HTTPS Server running on port ${port}`);
 });
+
