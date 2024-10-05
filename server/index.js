@@ -20,7 +20,10 @@ async function connectDB() {
 }
 
 connectDB();
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+app.use(cors({
+    credentials: true,
+    origin: ['http://localhost:3000', 'https://main.d1sy6f0btlu1wi.amplifyapp.com'],
+}));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
