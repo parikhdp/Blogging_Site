@@ -53,11 +53,15 @@ app.post('/login', async (req, res) => {
             if (err) {
                 return res.status(400).json({ message: 'Token generation failed' });
             }
-            res.cookie('token', token).json("ok");
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: true,           // Ensures cookies are sent over HTTPS
+                sameSite: 'None',       // Required for cross-origin requests
+                maxAge: 24 * 60 * 60 * 1000 // 1 day expiration
+            }).json("ok");
             return;
         });
-    }
-    else {
+    } else {
         return res.status(400).json({ message: 'Invalid credentials' });
     }
 });
