@@ -22,7 +22,7 @@ async function connectDB() {
 connectDB();
 app.use(cors({
     credentials: true,
-    origin: ['http://localhost:3000', 'https://main.d1sy6f0btlu1wi.amplifyapp.com'],
+    origin: ['http://localhost:3000', 'https://main.d19m4qsq21lz5t.amplifyapp.com'],
 }));
 app.use(express.json());
 app.use(cookieParser());
