@@ -21,10 +21,9 @@ async function connectDB() {
     console.log('Connected to MongoDB');
 }
 const sslOptions = {
-    key: fs.readFileSync('/home/ubuntu/ssl/mykey.key'), // Update the path if necessary
-    cert: fs.readFileSync('/home/ubuntu/ssl/mycert.crt'), // Update the path if necessary
+    key: fs.readFileSync('/etc/letsencrypt/live/bloggingaws.hopto.org/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/bloggingaws.hopto.org/fullchain.pem'),
 };
-
 connectDB();
 const corsOptions = {
     credentials: true,
@@ -171,7 +170,7 @@ app.get("/post/:id", async (req, res) => {
 });
 
 
-const port = 4000; // You can keep this port or change it as needed
+const port = 443; // You can keep this port or change it as needed
 https.createServer(sslOptions, app).listen(port, () => {
     console.log(`HTTPS Server running on port ${port}`);
 });
